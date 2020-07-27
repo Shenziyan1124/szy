@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      height: 100vh;
+      border: 1xp solid #cccccc;
+    }
+  </style>
+</head>
+
+<body>
+
+
+
+  <div id="div1">
+    <a href="#">a1</a>
+    <a href="#">a2</a>
+    <a href="#">a3</a>
+    <a href="#">a4</a>
+  </div>
+  <button id="123">点击增加一个a标签</button>
+
+  <div id="box">
+    <input type="button" id="add" value="添加" />
+    <input type="button" id="remove" value="删除" />
+    <input type="button" id="move" value="移动" />
+    <input type="button" id="select" value="选择" />
+  </div>
+
+  <input type="text" id="input" value="123">
+  <p id="p" style="background-color: aqua;width: 100px;height: 100px;;"></p>
+
+  <script>
+    // function trim(s) {
+    //   return s.replace(/ (^\s*) | (\s*$)  /g, "")
+    // }
+
+    // var xhr = new XMLHttpRequest();
+    // xhr.open('GET','url',true);
+    // xhr.send();
+
+    var a1 = 100;
+
+    if (1) {
+      a1 = 10;
+      //在当前块作用域中存在a使用let/const声明的情况下，给a赋值10时，只会在当前作用域找变量a，
+      // 而这时，还未到声明时候，所以控制台Error:a is not defined
+      // let a = 1;
+    }
+
+    // let const 块级作用域
+    // promise class async/await 箭头函数 模板字符串 结构赋值 symbol
+    // 
+
+
+    // const getArgs2 = (...rest) => {
+    //   console.log(rest[0]);
+    // }
+    // getArgs2([1, 2, 3, 4, 5])
+
+    const all = {
+
+
+      //阻止冒泡
+      stopPropagation: function (event) {
+        if (event.stopPropagation) {
+          event.stopPropagation();
+        } else {
+          event.cancelBubble = true;
+        }
+      },
+      //
+    }
+
+    //手动实现array.prototype.map
+    // function map(arr, mapCallback) {
+    //   // 首先，检查传递的参数是否正确。
+    //   if (!Array.isArray(arr) || !arr.length || typeof mapCallback !== 'function') {
+    //     console.log(132);
+    //     return [];
+    //   } else {
+    //     let result = [];
+    //     // 每次调用此函数时，我们都会创建一个 result 数组
+    //     // 因为我们不想改变原始数组。
+    //     for (let i = 0, len = arr.length; i < len; i++) {
+    //       result.push(mapCallback(arr[i], i, arr));
+    //       // 将 mapCallback 返回的结果 push 到 result 数组中
+    //     }
+    //     return result;
+    //   }
+    // }
+    // let arrr = [1, 2, 34, 5, 5, 67, 00]
+    // let newMap = map(arrr, function b(a, b, c) {
+    //   console.log(a, b, c);
+
+    // });
+    // console.log(newMap);
+
+
+    function map(arr, fun) {
+      if (!Array.isArray(arr) || !arr.length || typeof fun !== 'function') {
+        return [];
+      } else {
+        let newArr = [];
+        for (let i = 0; i < arr.length; i++) {
+          newArr.push(fun(arr[i], i, arr))
+        }
+        return newArr;
+      }
+    }
+
+    function deep(data) {
+      if (!isObject(data)) return;
+      let newData = Array.isArray(data) ? [] : {};
+      for (let k in data) {
+        if (data.hasOwnProperty(k)) {  //hasOwnProperty 是否有指定的键
+          if (typeof data[k] == 'object') {
+            newData[k] = deep(data[k]);
+          } else {
+            newData[k] = data[k];
+          }
+        }
+      }
+    }
+    function isObject(data) {
+      return typeof data === 'object' || data !== null;
+    }
+
+    // let obj = {
+    //   name: 's',
+    //   age: 'z',
+    //   y: 'y',
+    //   a: {
+    //     a: "a",
+    //     aa: "aa"
+    //   }
+    // }
+    // for (let j in obj) {
+    //   console.log(j, obj[j]);
+    //   console.log(obj.hasOwnProperty(j));
+    // }
+
+    function isObject(data) {
+      return typeof data === 'object' || data !== null;
+    }
+    function deep(data) {
+      if (!isObject(data)) return;
+      let newArr = Array.isArray(data) ? [] : {};
+      for (let j in data) {
+        if (data.hasOwnProperty(j)) {
+          if (typeof data[j] == 'object') {
+            newArr[j] = deep(data[j])
+          } else {
+            newArr[j] = data[j]
+          }
+        }
+      }
+    }
+
+    function isObject(data) {
+      return typeof data === 'object' || data !== null
+    }
+
+    function deep(data) {
+      if (!isObject(data)) return;
+      let newArr = Array.isArray(data) ? [] : {};
+      for (let j in data) {
+        if (data.hasOwnProperty(j)) {
+          if (typeof data[j] == 'object') {
+            newArr[j] = deep(data[j])
+          } else {
+            newArr[j] = data[j]
+          }
+        }
+      }
+    }
+
+
+    //call
+    Function.prototype.call = function (content, ...rest) {
+      let newContent = content || window;
+      newContent.fn = this;
+      let result = newContent.fn(...rest);
+      delete newContent.fn;
+      return result;
+    }
+
+    //数组去重1 双重for
+    let aaa = [1, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6, 6];
+    for (let i = 0; i < aaa.length; i++) {
+      for (let j = i + 1; j < aaa.length; j++) {
+        if (aaa[i] == aaa[j]) {
+          aaa.splice(j, 1);
+          j--;
+        }
+      }
+    }
+
+    //数组去重2 indexOf
+    function newAAA(aaa) {
+      let newArray = [];
+      for (let i = 0; i < aaa.length; i++) {
+        if (newArray.indexOf(aaa[i]) === -1) {
+          newArray.push(aaa[i])
+        }
+      }
+    }
+    // console.log(newAAA(aaa))
+
+    //数组去重3 set
+    function newAAAA(aaa) {
+      return Array.from(new Set(aaa))
+    }
+    // console.log(newAAAA(aaa));
+
+
+
+    //防抖---------------
+    function fangdou(fn, delp) {
+      let timer = null;
+      return function () {
+        if (timer) {
+          clearTimeout(timer)
+        }
+        timer = setTimeout(fn, delp)
+      }
+    }
+
+    function debounce(fn, delay) {
+      let timer = null;
+      return function () {
+        if (timer) {
+          clearTimeout(timer)
+        }
+        timer = setTimeout(fn, delay)
+      }
+    }
+
+    //节流-------------
+    function throttle(fn, delay) {
+      let vaild = true;
+      return function () {
+        if (!vaild) {
+          console.log('假');
+          return false;
+        }
+        console.log('12312312313112312');
+
+        vaild = false;
+        setTimeout(() => {
+          fn();
+          console.log('真');
+          vaild = true;
+        }, delay)
+      }
+
+    }
+    function showTop() {
+      let scrolltop = document.body.scrollTop || document.documentElement.scrollTop;
+      console.log('滚动位置：' + scrolltop);
+    }
+    window.onscroll = throttle(showTop, 2000);
+
+
+
+
+    function jieliu(fn, delty) {
+      let vaild = true;
+      if (!vaild) {
+        return false;
+      }
+
+      vaild = false;
+      setTimeout(() => {
+        fn();
+        vaild = true;
+      }, delty)
+    }
+
+
+
+    function promise(data) {
+      let that = this;
+      that.pennd = 'pennd'
+      that.resolve = undefined;
+      that.reject = undefined;
+
+      function resolveS(value) {
+        if (that.pennd == 'pennd') {
+          that.resolve = value;
+          that.reject = 'reject'
+        }
+      }
+
+      function rejectS(value) {
+        if (that.pennd == 'pennd') {
+          that.resolve = 'resolve';
+          that.reject = value;
+        }
+      }
+
+      try {
+        data(resolveS, rejectS)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+
+
+
+    function deep(data) {
+      if (!isObject(data)) return;
+      let newData = Array.isArray(data) ? [] : {};
+      for (let j in data) {
+        if (data.hasOwnProperty(j)) {
+          if (typeof data[j] == 'object') {
+            newData[j] = deep(data[j])
+          } else {
+            newData[j] = data[j];
+          }
+        }
+      }
+    }
+    function isObject(data) {
+      return typeof data == 'object' || data !== null;
+    }
+
+
+    function fangdou(fn, t) {
+      let timer = null;
+      return function () {
+        if (timer == null) {
+          clearTimeout(timer)
+        }
+        timer = setTimeout(fn, t)
+      }
+    }
+    function jieliu(fn, t) {
+      let is = true;
+      if (!is) {
+        return false
+      }
+      is = false;
+      setTimeout(() => {
+        fn();
+        is = true;
+      }, t)
+    }
+
+
+    function isObject(data) {
+      return typeof data === 'object' || data !== null;
+    }
+    function deep(data) {
+      if (!isObject(data)) return;
+      let newData = Array.isArray(data) ? [] : {};
+      for (let j in data) {
+        if (data.hasOwnProperty(j)) {
+          if (typeof data[j] == 'object') {
+            newData[j] = deep(data[j])
+          } else {
+            newData[j] = data[j]
+          }
+        }
+      }
+    }
+
+
+    var users = [{
+      id: 1, name: "a"
+    }, {
+      id: 2, name: "a"
+    }, {
+      id: 3, name: "b"
+    }, {
+      id: 4, name: "v"
+    }]
+    Array.prototype.unique = function () {
+      var res;
+      this.map(item => {
+        this[item.id - 1] = item.name
+      })
+      // ES6里新添加了两个很好用的东西，set和Array.from
+      // set是一种新的数据结构，它可以接收一个数组或者是类数组对象，自动去重其中的重复项目。
+      res = new Set(this);
+      console.log("new Set对象", res)
+      // 但是这里大家可以看到，set返回的是一个对象，但是我们想要的是数组啊。
+      // 这回，就该轮到Array.from出场了，它的作用，就是可以把类数组对象、可迭代对象转化为数组。
+      res = Array.from(new Set(this));
+      return res//es6 数组去重
+    }
+    // console.log(users.unique());
+
+    var man = {
+      name: 'jscoder',
+      age: 22
+    };
+    var proxy = new Proxy(man, {
+      get: function (target, property) {
+        // console.log(target, property);
+        if (property in target) {
+          return target[property];
+        }
+      }
+    })
+
+    // console.log(proxy.name);
+    // console.log(proxy.aa);
+
+
+    function fangdou(fn, delp) {
+      let timer = null;
+      return function () {
+        if (timer) {
+          clearTimeout(timer)
+        }
+        timer = setTimeout(fn, delp)
+      }
+    }
+
+    function jieliu(fn, delp) {
+      let vaild = true;
+      if (!vaild) {
+        return false;
+      }
+
+      vaild = false;
+      return function () {
+        setTimeout(() => {
+          vaild = true,
+            fn();
+        }, delp)
+      }
+
+    }
+
+
+    // var value = 1;
+    // function foo() {
+    //   console.log(value);
+    // }
+    // function bar() {
+    //   var value = 2;
+    //   foo();
+    // }
+    // bar();
+
+
+    // function foo() {
+    //   console.log(a);
+    //   var a = 1;
+    // }
+    // foo(); // ???
+
+    // function bar() {
+    //   a = 1;
+    //   console.log(a);
+    // }
+    // bar(); // ???
+
+    // var data = [];
+
+    // for (var i = 0; i < 3; i++) {
+    //   data[i] = (function (i) {
+    //     return function () {
+    //       console.log(i);
+    //     }
+    //   })(i);
+    // }
+
+    // data[0]();
+    // data[1]();
+    // data[2]();
+
+    // Function.prototype.call2 = function (context) {
+    //   context.fn = this;
+    //   var args = [];
+    //   for (var i = 1, len = arguments.length; i < len; i++) {
+    //     args.push('arguments[' + i + ']')
+    //     // console.log(args);
+    //   }
+    //   eval('context.fn(' + args + ')')
+    //   console.log(eval('context.fn(' + args + ')'));
+
+    //   delete context.fn;
+    // }
+    // var foo = {
+    //   value: 1
+    // }
+    // function bar(name, age) {
+    //   console.log(this.value);
+    //   console.log(name);
+    //   console.log(age);
+    // }
+    // bar.call2(foo, 'zhangsan', 18)
+
+
+
+    const div1 = document.getElementById('div1')
+    div1.addEventListener('click', function (event) {
+      event.preventDefault() // 阻止默认行为
+      console.log(event);
+
+
+      const target = event.target
+      if (target.nodeName === 'A') {
+        alert(target.innerHTML)
+      }
+    })
+
+
+    window.onload = function () {
+      var oBox = document.getElementById("box");
+      oBox.onclick = function (ev) {
+        var ev = ev || window.event;
+        var target = ev.target || ev.srcElement;
+        if (target.nodeName.toLocaleLowerCase() == 'input') {
+          switch (target.id) {
+            case 'add':
+              alert('添加');
+              break;
+            case 'remove':
+              alert('删除');
+              break;
+            case 'move':
+              alert('移动');
+              break;
+            case 'select':
+              alert('选择');
+              break;
+          }
+        }
+      }
+
+
+    }
+
+    let dowcumenButton = document.getElementById("123")
+    console.log(dowcumenButton);
+
+    dowcumenButton.onclick = e => {
+      console.log('add')
+      console.log(e.target.nodeName)
+    }
+
+    var obj = {}
+    let oInput = document.getElementById('input')
+    Object.defineProperty(obj, 'txt', {
+      get: function () {
+        return obj
+      },
+      set: function (n) {
+        console.log(n);
+
+        oInput.value = n;
+        document.getElementById('p').innerHTML = n;
+      }
+    })
+
+    document.addEventListener('keyup', function (e) {
+      console.log(e);
+      obj.txt = e.target.value;
+    })
+
+
+    // function fun(n, o) {
+    //   console.log(o)
+    //   return {
+    //     fun: function (m) {
+    //       return fun(m, n);
+    //     }
+    //   };
+    // }
+    // var a = fun(0); a.fun(1); a.fun(2); a.fun(3);//undefined,?,?,?
+    // var b = fun(0).fun(1).fun(2).fun(3);//undefined,?,?,?
+    // var c = fun(0).fun(1); c.fun(2); c.fun(3);//undefined,?,?,?
+
+    // console.log(a.fun(1));
+    // console.log(a.fun(2));
+    // console.log(a.fun(3));
+    // console.log(c.fun(2), "111");
+
+    // function fn() {
+    //   return 20;
+    // }
+    // console.log(fn() + 10); // 输出结果是多少？ 30   
+
+    // function fn() {
+    //   return 20;
+    // }
+    // fn.toString = function () {
+    //   return 10;
+    // }
+    // console.log(fn + 10);
+
+    // function Foo() {
+    //   getName = function () { alert(1); };
+    //   return this;
+    // }
+    // Foo.getName = function () { alert(2); };
+    // Foo.prototype.getName = function () { alert(3); };
+    // var getName = function () { alert(4); };
+    // function getName() { alert(5); }
+
+    // //请写出以下输出结果：
+    // Foo.getName();  //2
+    // getName();  //4
+    // Foo().getName(); //1
+    // getName();  //1
+    // new Foo.getName(); //2
+    // new Foo().getName();//3
+    // new new Foo().getName(); //3
+
+
+    // class Promise {
+    //   constructor(fn) {
+    //     this.state = 'pending'
+    //     this.value = null
+    //     this.reason = null
+    //     let reslove = data => {
+    //       if (this.state == 'pending') {
+    //         this.state = 'chenggong'
+    //         this.value = data
+    //       }
+    //     }
+    //     let reject = data => {
+    //       if (this.state == 'pending') {
+    //         this.state = 'shibai'
+    //         this.reason = data
+    //       }
+    //     }
+
+    //     try {
+    //       fn(resolve, reject)
+    //     } catch (error) {
+    //       reject(error)
+    //     }
+
+    //     then (onFulfilled, onRejected){
+    //       switch (this.state) {
+    //         case 'chenggong':
+    //           onFulfilled(this.value)
+    //           break;
+    //         case 'shibai':
+    //           onRejected(this.reason)
+    //           break;
+
+    //         default:
+    //           break;
+    //       }
+    //     }
+    //   }
+    // }
+
+
+    // function say667() {
+    //   // Local variable that ends up within closure
+    //   var num = 666;
+    //   var sayAlert = function () {
+    //     console.log(1);
+
+    //     // alert(num);
+    //   }
+    //   num++;
+    //   // return sayAlert; 
+    // }
+
+    // var sayAlert = say667();
+    // sayAlert()//执行结果应该弹出的667
+
+
+    //字符串转大写
+    function UpperCase(str) {
+      var arr = str.split('-')
+      // console.log(arr);
+      return arr.map(function (item, index) {
+        if (index === 0) {
+          return item
+        } else {
+          return item.charAt(0).toUpperCase() + item.slice(1)
+        }
+      }).join('')
+
+    }
+    console.log(UpperCase('get-element-by-id'));
+
+    //获取url {a: "2", b: "3", c: "4"}
+    function getUrlParams(url) {
+      let newUrl = url.split('?')[1].split('&')
+      // let obj = newUrl.split('&') 
+      let arr = {};
+      let json = {};
+      newUrl.map((item, index) => {
+        arr[index] = item.split('=');
+        json[arr[index][0]] = arr[index][1];
+        // console.log(json);
+        // return json
+      })
+      return json
+    }
+    console.log(getUrlParams("https://www.cnblogs.com/rxqlx/p/10394154.html?a=2&b=3&c=4"));
+
+    //时间戳转换当前时间  2020-07-24 13:36
+    function add0(m) {
+      return m < 10 ? "0" + m : m
+    }
+    function timer(str) {
+      // console.log(str);
+      let data = new Date(str);
+      let y = data.getFullYear();
+      let yy = data.getMonth() + 1;
+      var d = data.getDate();
+      let t = data.getHours();
+      let s = data.getMinutes();
+      // console.log();
+      return y + "-" + add0(yy) + "-" + add0(d) + " " + add0(t) + ":" + add0(s)
+    }
+    console.log(timer(new Date().getTime()));
+
+    //深拷贝
+    function isObject(obj) {
+      return typeof obj == 'Object' || obj !== null;
+    }
+    function deep(obj) {
+      if (!isObject(obj)) return
+      let newObj = Array.isArray(obj) ? [] : {};
+      for (let i in obj) {
+        if (obj.hasOwnProperty(i)) {
+          if (typeof obj[i] == 'object') {
+            newObj[i] = deep(obj[i])
+          } else {
+            newObj[i] = obj[i]
+          }
+        }
+      }
+    }
+    //手写promis
+    class Promise {
+      constructor(fn) {
+        let _this = this;
+        _this.status = 'pending'
+        _this.value = null;
+        _this.err = null;
+
+        function resolve(val) {
+          if (_this.status == 'pending') {
+            _this.status = 'resolve'
+            _this.value = val;
+          }
+        }
+
+        function reject(err) {
+          if (_this.status == 'pending') {
+            _this.status = 'reject'
+            _this.value = err;
+          }
+        }
+
+        try {
+          fn(resolve, reject)
+        } catch (error) {
+          reject(error)
+        }
+      }
+
+      then(onResolve, onRject) {
+        let _this = this;
+        if (_this.status == 'resolve') {
+          onResolve(_this.value)
+        } else {
+          onRject(_this.err)
+        }
+      }
+    }
+    new Promise((resolve) => {
+      resolve(1)
+    }).then(res => {
+      console.log(res);
+    })
+
+    // 首字母转大写 2
+    function Upp(str) {
+      let nstr = str.split('-');
+      return nstr.map((item, index) => {
+        // console.log(item, index);
+        if (index == 0) {
+          return item
+        } else {
+          return item.charAt(0).toUpperCase() + item.slice(1)
+        }
+      }).join('')
+    }
+    // console.log(Upp('element-id-id'));
+
+    //url 2
+    function changeUrl(url) {
+      let str = url.split('?')[1].split('&');
+      let arr = {};
+      let json = {};
+      str.map((item, index) => {
+        // console.log(item, index);
+        arr[index] = item.split('=');
+        // console.log(arr[index]);
+        json[arr[index][0]] = arr[index][1]
+      })
+      return json
+    }
+    // console.log(changeUrl('https://www.cnblogs.com/rxqlx/p/10394154.html?a=2&b=3&c=4'));
+
+    function newD(data) {
+      console.log(data);
+      let d = new Date(data);
+      let y = d.getFullYear();
+      let m = d.getMonth() + 1;
+      let day = d.getDate();
+      let s = d.getHours();
+      let f = d.getMinutes();
+      return y + "-" + m + "-" + day + "  " + s + ":" + f
+    }
+    // console.log(newD(new Date().getTime()));
+
+
+    class promise1 {
+      constructor(fn) {
+        let _this = this;
+        _this.status = 'pending';
+        _this.value = null;
+        _this.error = null;
+
+        function reslove(val) {
+          if (_this.status == 'pending') {
+            _this.status = "reslove";
+            _this.value = val;
+          }
+        }
+
+        function reject(err) {
+          if (_this.status == "pending") {
+            _this.status = "reject";
+            _this.error = err;
+          }
+        }
+
+
+        try {
+          fn(reslove, reject)
+        } catch (error) {
+          reject(error)
+        }
+      }
+
+      then(onReslove, onReject) {
+        let _this = this;
+        if (_this.status == 'reslove') {
+          onReslove(_this.value)
+        } else {
+          onReject(_this.error)
+        }
+      }
+    }
+
+    new promise1((reslove, reject) => {
+      reslove(1111)
+    }).then(ers => {
+      console.log(ers);
+    })
+
+
+
+
+    function changeI(str) {
+      // console.log(str);
+      let arr = str.split('-');
+      return arr.map((item, index) => {
+        if (index == 0) {
+          return item
+        } else {
+          return item.charAt(0).toUpperCase() + item.slice(1)
+        }
+      }).join('')
+
+    }
+    console.log(changeI('getelement-id-by'));
+
+    function cahngeU(a) {
+      let Nstr = a.split('?')[1].split('&');
+      // console.log(Nstr);
+      let arr = {};
+      let json = {};
+      Nstr.map((item, index) => {
+        arr[index] = item.split('=');
+        // console.log(arr[index]);
+        json[arr[index][0]] = arr[index][1]
+        console.log(json);
+      })
+    }
+    console.log(cahngeU('https://www.cnblogs.com/rxqlx/p/10394154.html?a=2&b=3&c=4'));
+
+    function changeD(data) {
+      let date = new Date(data);
+      let y = date.getFullYear();
+      let m = date.getMonth() + 1;
+      let d = date.getDate();
+      let h = date.getHours();
+      let s = date.getMinutes();
+      let mm = date.getSeconds();
+      return add00(y) + '-' + add00(m) + '-' + add00(d) + " " + add00(h) + ":" + add00(s) + ":" + mm
+    }
+    function add00(str) {
+      return str < 10 ? "0" + str : str
+    }
+    console.log(changeD(new Date().getTime()));
+
+    class promise2 {
+      constructor(fn) {
+        let _this = this
+        _this.status = 'pending';
+        _this.val = null;
+        _this.err = null;
+
+        function reslove(value) {
+          if (_this.status == 'pending') {
+            _this.status = 'reslove';
+            _this.val = value
+          }
+        }
+
+        function reject(error) {
+          if (_this.status == 'pending') {
+            _this.status = 'reject';
+            _this.err = error
+          }
+        }
+
+        try {
+          fn(reslove, reject)
+        } catch (error) {
+          reject(error)
+        }
+      }
+
+      then(onReslove, onReject) {
+        let _this = this;
+        if (_this.status == 'reslove') {
+          onReslove(_this.val)
+        } else {
+          onReject(_this.err)
+
+
+        }
+      }
+    }
+    new promise2((reslove, reject) => {
+      reslove(1123)
+    }).then(res => {
+      console.log(res);
+    })
+
+
+
+
+
+
+  </script>
+</body>
+
+</html>

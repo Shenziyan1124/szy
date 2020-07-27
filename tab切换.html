@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .select {
+      background-color: brown;
+    }
+
+    .div {
+      display: none;
+      width: 320px;
+      height: 80px;
+      border: 1px solid #cccccc;
+    }
+
+    .sapn {
+      text-align: center;
+      line-height: 30px;
+      display: inline-block;
+      width: 100px;
+      height: 100%;
+      border: 1px solid #cccccc;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="#div" style="width: 320px;height: 30px;">
+    <span class="sapn select">html</span>
+    <span class="sapn">css</span>
+    <span class="sapn">js</span>
+  </div>
+  <div class="div" style="display: block;">html</div>
+  <div class="div">css</div>
+  <div class="div">js</div>
+
+
+  <script src="./js/jquery.js"></script>
+  <script>
+    let aSpan = $('#div .sapn');
+    let aDiv = $('.div')
+
+    // $('.span').click(function(){
+    //   $(this).attr('class','select span')
+    //   $(this).siblings('.select').attr('class','sapn');
+    //   aDiv.eq
+    // })
+    $('.sapn').click(function () {
+
+      $(this).attr("class", "select sapn");
+      $(this).siblings(".select").attr("class", "sapn");
+
+      aDiv.eq($(this).index()).css("display", "block");
+      aDiv.eq($(this).index() - 1).css("display", "none");
+
+    })
+
+
+  </script>
+
+</body>
+
+</html>
